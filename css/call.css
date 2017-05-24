@@ -1,0 +1,37 @@
+#tab{
+	border-color: #ccc;
+	font-weight: normal;
+}
+th{
+	font-weight: normal;
+	text-align: center;
+}
+td{
+	text-align: center;
+	font-size: 14px;
+	padding:10px 10px 10px 10px; 
+}
+.td1{
+	text-align:left;
+	padding:10px 10px 10px 10px; 
+}
+.th1{
+	width: 146px;
+	height:46px;
+}
+.th2{
+	width: 141px;
+	height:46px;
+}
+.th3{
+	width: 91px;
+}
+.th4{
+	width: 123px;
+}
+.th5{
+	width: 301px;
+}
+.th6{
+	width: 400px;
+}

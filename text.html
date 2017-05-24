@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>text</title>
+</head>
+<body>
+ 
+<table id="MyTable" cellspacing="1" cellpadding="3"> 
+<asp:Repeater ID="reorderInFo" runat="server"> 
+<ItemTemplate> 
+<tr style="text-align: left;"> 
+<td width="70" height="40" id="OrderName"> 
+订单名称： 
+</td> 
+<td colspan="5" class="caname" id="OrderName1"> 
+<%#Eval("OrderName")%> 
+</td> 
+</tr> 
+<tr style="text-align: left;"> 
+<td width="70" height="40" id="ID_Product"> 
+产品类型: 
+</td> 
+<td class="caname" id="ID_Product1"> 
+<%#Eval("ID_Product")%> 
+</td> 
+<td width="40" id="OrderState_Send"> 
+状态: 
+</td> 
+<td class="caname" id="OrderState_Send1" ><%#Eval("OrderState_Send")%> 
+</td> 
+<td width="40" id="OrderQty"> 
+印量: 
+</td> 
+<td class="caname" id="OrderQty1" ><%#Eval("OrderQty")%> 
+</td> 
+</tr> 
+<tr> 
+<td width="70" height="60" id="SendAddress"> 
+收货信息: 
+</td> 
+<td colspan="5" class="caname" id="SendAddress1" ><%#Eval("SendAddress")%> 
+</td> 
+</tr> 
+<tr style="text-align: left;"> 
+<td width="70" height="50" id="OrderMoney_Total"> 
+总金额: 
+</td> 
+<td colspan="5" class="caname" id="OrderMoney_Total1" ><%#Eval("OrderMoney_Total")%> 
+</td> 
+</tr> 
+
+</ItemTemplate> 
+</asp:Repeater> 
+</table> 
+
+<p><span style="font-size:14px;">这是一般处理程序页面<span style="font-family:Times New Roman;"> 03.ashx</span></span></p><p> 
+<%@ WebHandler Language="C#" Class="_03" %></p> 
+
+
+	
+</body>
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+ 
+$(function () { 
+//获取class为caname的元素 
+$(".caname").click(function () { 
+var td = $(this); 
+var txt = $.trim(td.text()); 
+var input = $("<input type='text'value='" + txt + "'/>"); 
+td.html(input); 
+input.click(function () { return false; }); 
+//获取焦点 
+input.trigger("focus"); 
+//文本框失去焦点后提交内容，重新变为文本 
+input.blur(function () { 
+var newtxt = $(this).val(); 
+//判断文本有没有修改 
+if (newtxt != txt) { 
+td.html(newtxt); 
+
+//不需要使用数据库的这段可以不需要 
+
+//var Order_Id = $("#ID_Order").text(); 
+var updateCol = $.trim(td.prev().attr("id"));//我重点要说的是着一句：td.prev();表示本td的上一个td。这句代码的意思是你所点击的td的上一个td的id（如果不明白可以看前面的03.aspx页面）。 
+//ajax异步更改数据库,加参数date是解决缓存问题 
+url = "../test/03.ashx?caname=" + newtxt + "&updateCol=" + updateCol + "&date=" + new Date(); 
+
+
+
+
+//使用get()方法打开一个一般处理程序，data接受返回的参数（在一般处理程序中返回参数的方法 context.Response.Write("要返回的参数");） 
+//数据库的修改就在一般处理程序中完成 
+$.get(url, function (data) { 
+// if (data == "1") { 
+// alert("该类别已存在！"); 
+// td.html(txt); 
+// return; 
+// } 
+// alert(data); 
+alert("修改成功"); 
+td.html(newtxt); 
+}); 
+	
+	
+</script>
+</html>
